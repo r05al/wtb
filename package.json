@@ -1,0 +1,22 @@
+{
+  "name": "wtb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r05al/wtb.git"
+  },
+  "author": "Peter Rosal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r05al/wtb/issues"
+  },
+  "homepage": "https://github.com/r05al/wtb#readme",
+  "devDependencies": {
+    "webpack": "^1.13.2"
+  }
+}
