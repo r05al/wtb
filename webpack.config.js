@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
   devtool: 'eval-source-map',
   entry:  __dirname + "/app/App.js",
@@ -24,11 +26,16 @@ module.exports = {
     ]
   },
 
+  plugins: [
+	  new webpack.HotModuleReplacementPlugin()
+  ],
+
 
   devServer: {
     contentBase: "./public",
     colors: true,
     historyApiFallback: true,
-    inline: true
+    inline: true,
+    hot: true
   }
 }
