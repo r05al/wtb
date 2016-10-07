@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import ClothingItem from './ClothingItem';
 
 class Look extends Component {
   render() {
+    let look = this.props.look.map((item) => {
+    	return <ClothingItem key={item.id} {...item} />
+    });
     return (
       <div>
-        "Create your look here"
+        {this.props.title}
+        { look }
       </div>
     );
   }
