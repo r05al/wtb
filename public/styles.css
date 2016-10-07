@@ -1,0 +1,57 @@
+html, body, #root, .app {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #eee;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+}
+
+.list-title {
+	height: 40px;
+	width: 100%;
+	background-image: linear-gradient(to top, #d8d4d2, #fcfcfc);
+	color: #403e3d;
+}
+
+.look {
+	height: 60%;
+	width: 50%;
+	margin: 0 auto;
+}
+
+.look-grid {
+	height: 120px;
+	width: 120px;
+}
+
+.selection-items {
+	width: 100%;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+}
+
+.list--is-open {
+	height: 120px;
+	width: 100%;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	background-color: white
+
+}
+
+.list-title--is-open {
+	position: fixed;
+	bottom: 120px;
+}
+
+.clothing {
+	display: inline-block;
+	height: 120px;
+	width: 120px;
+	border: solid 1px;
+}

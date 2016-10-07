@@ -1,5 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
-import Look from './components/Look';
+import WTBBoardContainer from './components/WTBBoardContainer';
 
-render(<Look />, document.getElementById('root'));
+render(<WTBBoardContainer />, document.getElementById('root'));

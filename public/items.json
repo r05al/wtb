@@ -1,0 +1,42 @@
+[
+	{
+		"id" : 1,
+		"name" : "white tee",
+		"type" : "shirt",
+		"tags" : ["white", "short-sleeved", "cotton"],
+		"brand" : "Hanes",
+		"href" : ""
+	},
+	{
+		"id" : 2,
+		"name" : "track pant",
+		"type" : "pant",
+		"tags" : ["jogger", "slim", "jersey", "cotton", "black"],
+		"brand" : "Nike",
+		"href" : ""
+	},
+	{
+		"id" : 3,
+		"name" : "international jacket",
+		"type" : "jacket",
+		"tags" : ["quilted", "wax", "tan", "polyester"],
+		"brand" : "Barbour",
+		"href" : ""
+	},
+	{
+		"id" : 4,
+		"name" : "canoe moc",
+		"type" : "shoe",
+		"tags" : ["leather", "camp", "blucher"],
+		"brand" : "Quoddy",
+		"href" : ""
+	},
+	{
+		"id" : 5,
+		"name" : "indy boot",
+		"type" : "shoe",
+		"tags" : ["leather", "boot", "chromexel"],
+		"brand" : "Alden",
+		"href" : ""
+	}
+]
