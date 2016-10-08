@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 class List extends Component {
 	constructor() {
@@ -20,8 +21,9 @@ class List extends Component {
 	  		return (
 	  			<div className='clothing' key={item.id} onClick={
 	  				this.props.lookCallbacks.select.bind(null, item) }>
-	  				<img href="#" />
-	  				{ item.name }
+	  				<div className="item-edit"><Link to={'/edit/'+item.id}>✎</Link></div>
+	  				<img src={ item.href } />
+	  				{ item.title }
 	  			</div>
 	  		);
 	  	});

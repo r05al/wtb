@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import ClothingItem from './ClothingItem';
 
 class Look extends Component {
   render() {
     let look = this.props.look.map((item) => {
     	return <div className="look-grid" key={item.id}
 									onClick={ this.props.lookCallbacks.deselect.bind(null, item) }>
-						 	{item.name}
+						 	{item.title}
+						 	<img src={item.href} />
 						 </div>
     });
     return (
