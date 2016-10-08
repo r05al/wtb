@@ -1,0 +1,22 @@
+[
+	{
+		"id" : 4003,
+		"title" : "Select jacket",
+		"type" : "jacket"
+	},
+	{
+		"id" : 4001,
+		"title" : "Select shirt",
+		"type" : "shirt"
+	},
+	{
+		"id" : 4002,
+		"title" : "Select pant",
+		"type" : "pant"
+	},
+	{
+		"id" : 4004,
+		"title" : "Select shoe",
+		"type" : "shoe"
+	}
+]

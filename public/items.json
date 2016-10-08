@@ -1,42 +1,74 @@
 [
 	{
-		"id" : 1,
-		"name" : "white tee",
+		"id" : 3001,
+		"title" : "white tee",
 		"type" : "shirt",
 		"tags" : ["white", "short-sleeved", "cotton"],
 		"brand" : "Hanes",
 		"href" : ""
 	},
 	{
-		"id" : 2,
-		"name" : "track pant",
+		"id" : 3002,
+		"title" : "track pant",
 		"type" : "pant",
 		"tags" : ["jogger", "slim", "jersey", "cotton", "black"],
 		"brand" : "Nike",
 		"href" : ""
 	},
 	{
-		"id" : 3,
-		"name" : "international jacket",
+		"id" : 3003,
+		"title" : "international jacket",
 		"type" : "jacket",
 		"tags" : ["quilted", "wax", "tan", "polyester"],
 		"brand" : "Barbour",
 		"href" : ""
 	},
 	{
-		"id" : 4,
-		"name" : "canoe moc",
+		"id" : 3004,
+		"title" : "canoe moc",
 		"type" : "shoe",
 		"tags" : ["leather", "camp", "blucher"],
 		"brand" : "Quoddy",
 		"href" : ""
 	},
 	{
-		"id" : 5,
-		"name" : "indy boot",
+		"id" : 3005,
+		"title" : "indy boot",
 		"type" : "shoe",
 		"tags" : ["leather", "boot", "chromexel"],
 		"brand" : "Alden",
+		"href" : "http://cdn.needsupply.com/media/catalog/product/cache/1/image/610x783/e9607dc71bc010050ca2ae6f644b84c1/h/5/h55e4f69126707.jpg"
+	},
+	{
+		"id" : 4003,
+		"title" : "bomber jacket",
+		"type" : "jacket",
+		"tags" : "nylon oversized black",
+		"brand" : "Alpha Industries",
+		"href" : ""
+	},
+	{
+		"id" : 4001,
+		"title" : "blue tee",
+		"type" : "shirt",
+		"tags" : "white short-sleeved cotton",
+		"brand" : "Hanes",
+		"href" : ""
+	},
+	{
+		"id" : 4002,
+		"title" : "jogger pant",
+		"type" : "pant",
+		"tags" : "jogger slim jersey cotton black",
+		"brand" : "John Elliott",
+		"href" : ""
+	},
+	{
+		"id" : 4004,
+		"title" : "yeezy boost",
+		"type" : "shoe",
+		"tags" : "low knit grey",
+		"brand" : "Adidas",
 		"href" : ""
 	}
 ]
