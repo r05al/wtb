@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import items from '../../public/items.json';
+import look from '../../public/look.json';
 import WTBBoard from './WTBBoard';
 import update from 'react-addons-update';
 import moment from 'moment';
@@ -17,10 +18,7 @@ class WTBBoardContainer extends Component {
 
   componentDidMount() {
     this.setState({ clothingItems: items });
-    this.setState({ look: [{'name':"barbour", "id": 1, "type": "jacket"},
-                           {'name':"gitman", "id": 2, "type": "shirt"},
-                           {'name':"levis", "id": 3, "type": "pant"},
-                           {'name':"vans", "id": 4, "type": "shoe"}] });
+    this.setState({ look: look });
   }
 
   select(item) {
@@ -40,7 +38,11 @@ class WTBBoardContainer extends Component {
 
     let nextState = update(
       this.state.look, {
-        [lookIndex]: { $set: {"type": item.type } }
+        [lookIndex]: { $set: {
+                                "id": Date.now(),
+                                "type": item.type,
+                                "title": `Select ${item.type}`
+                              } }
       }
     );
 
@@ -52,19 +54,54 @@ class WTBBoardContainer extends Component {
     this.setState({selectedDate: date});
   }
 
+  addItem(item) {
+    let prevState = this.state;
+
+    if (item.id === null) {
+      let card = Object.assign({}, card, { id: Date.now() });
+    }
+
+    let nextState = update(this.state.clothingItems, { $push: [item] });
+
+    this.setState({clothingItems: nextState});
+  }
+
+  updateItem(item) {
+    let prevState = this.state;
+
+    let itemIndex = this.state.clothingItems.findIndex((piece) => piece.id == item.id);
+
+    let nextState = update(
+                        this.state.clothingItems, {
+                          [itemIndex]: { $set: item }
+                        });
+    
+    let lookIndex = this.state.look.findIndex((piece) => piece.id == item.id);
+
+    if (lookIndex !== -1) {
+      this.deselect(this.state.look[lookIndex]);
+    }
+
+    this.setState({ clothingItems: nextState });
+  }
+
   render() {
-    return (
-      <WTBBoard look={this.state.look}
-                clothingItems={this.state.clothingItems}
-                selectedDate={this.state.selectedDate}
-                lookCallbacks={
-                                { 
-                                  select: this.select.bind(this),
-                                  deselect: this.deselect.bind(this),
-                                  handleChange: this.handleChange.bind(this)
-                                }
-                              } />
-    )
+    let wtbBoard = this.props.children && React.cloneElement(this.props.children, {
+      look: this.state.look,
+      clothingItems: this.state.clothingItems,
+      selectedDate: this.state.selectedDate,
+      lookCallbacks: {
+        select: this.select.bind(this),
+        deselect: this.deselect.bind(this),
+        handleChange: this.handleChange.bind(this)
+      },
+      itemCallbacks: {
+        addItem: this.addItem.bind(this),
+        updateItem: this.updateItem.bind(this)
+      }
+    });
+
+    return wtbBoard;
   }
 }
 
