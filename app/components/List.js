@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Slider from 'react-slick';
 import { Link } from 'react-router';
 
 class List extends Component {
@@ -9,11 +10,18 @@ class List extends Component {
 		}
 	}
 
+
 	toggleItems() {
 		this.setState({showItems: !this.state.showItems})
 	}
 
   render() {
+		let settings = {
+			infinite: true,
+			speed: 500,
+			slidesToShow: 7,
+			slidesToScroll: 1
+		};
 
   	let clothingItems;
   	if (this.state.showItems) {
@@ -23,11 +31,13 @@ class List extends Component {
 	  				this.props.lookCallbacks.select.bind(null, item) }>
 	  				<div className="item-edit"><Link to={'/edit/'+item.id}>✎</Link></div>
 	  				<img src={ item.href } />
-	  				{ item.title }
 	  			</div>
 	  		);
 	  	});
+	 		var slider = <Slider {...settings}>{clothingItems}</Slider>
   	}
+
+
 
     return (
       <div className={ this.state.showItems ? "list list--is-open" : "list" }>
@@ -36,7 +46,7 @@ class List extends Component {
       		} onClick={this.toggleItems.bind(this)}>
       		{this.props.title}
       	</div>
-      	{ clothingItems }
+    		{ slider }
       </div>
     );
   }
