@@ -3,23 +3,50 @@ import DatePicker from 'react-datepicker';
 import { Link } from 'react-router';
 import Look from './Look';
 import List from './List';
+import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
 class WTBBoard extends Component {
+
+  handleSetLook(e) {
+    let lookId = e.target.value;
+    this.props.lookCallbacks.setLook(lookId);
+  }
+
   render() {
+
     let clothingItemModal = this.props.children && React.cloneElement(this.props.children, {
       clothingItems: this.props.clothingItems,
-      itemCallbacks: this.props.itemCallbacks
+      look: this.props.look,
+      itemCallbacks: this.props.itemCallbacks,
+      lookCallbacks: this.props.lookCallbacks
+    });
+
+    let datedLooks;
+    if (this.props.look.date) {
+      datedLooks = this.props.savedLooks.filter((look) => look.date.format('L') === this.props.look.date.format('L'));
+    } else {
+      datedLooks = this.props.savedLooks;
+    }
+
+    let savedLooksSelection = datedLooks.map((look) => {
+      return <option key={look.id} value={look.id}>{look.title}</option>
     });
 
     return (
       <div className="app">
         <Link to='/new' className="float-button">+</Link>
 
-        <DatePicker selected={this.props.selectedDate}
+        <DatePicker selected={this.props.look.date}
                     onChange={this.props.lookCallbacks.handleChange } />
-        <Look id="look" title="Configure your Look" 
+        <select id="savedLook"
+                value={this.props.look.id}
+                onChange={this.handleSetLook.bind(this)}>
+          <option value="null"></option>
+          {savedLooksSelection}
+        </select>
+        <Look id="look"
               look={this.props.look}
               lookCallbacks={this.props.lookCallbacks} />
         <div className="selection-items">
@@ -47,9 +74,11 @@ class WTBBoard extends Component {
 }
 
 WTBBoard.propTypes = {
-  look: PropTypes.arrayOf(PropTypes.object),
+  look: PropTypes.object,
   clothingItems: PropTypes.arrayOf(PropTypes.object),
-  lookCallbacks: PropTypes.object
+  savedLooks: PropTypes.arrayOf(PropTypes.object),
+  lookCallbacks: PropTypes.object,
+  itemCallbacks: PropTypes.object
 };
 
 export default WTBBoard;
