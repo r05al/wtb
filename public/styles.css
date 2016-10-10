@@ -1,3 +1,8 @@
+* {
+  min-height: 0;
+  min-width: 0;
+}
+
 html, body, #root, .app {
 	height: 100%;
 	margin: 0;
@@ -5,15 +10,19 @@ html, body, #root, .app {
 }
 
 body {
-	background: #eee;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
 }
 
-.list-title {
+.list {
 	height: 40px;
 	width: 100%;
-	background-image: linear-gradient(to top, #d8d4d2, #fcfcfc);
+	box-sizing: border-box;
+	border-top: lightgray solid;
 	color: #403e3d;
+}
+
+.list-title {
+
 }
 
 .look {
@@ -26,6 +35,15 @@ body {
 .look-grid {
 	height: 120px;
 	width: 120px;
+}
+
+.look-title {
+	opacity: 0;
+	transition: opacity .25s ease-in;
+}
+
+.look-title:hover {
+  opacity: 1;
 }
 
 .selection-items {
@@ -51,10 +69,9 @@ body {
 }
 
 .clothing {
-	display: inline-block;
+	display: inline-flex;
 	height: 120px;
 	width: 120px;
-	border: solid 1px;
 }
 
 img {
@@ -62,7 +79,7 @@ img {
   height: auto;
 }
 
-.item {
+.item, .clothing {
   position: relative;
   z-index: 1;
   background: #fff;
@@ -133,6 +150,7 @@ img {
 }
 
 .item-edit a{
+	z-index: 2;
   text-decoration: none;
   color: #999;
   font-size: 17px;
