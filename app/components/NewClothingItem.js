@@ -18,7 +18,6 @@ class NewClothingItem extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		debugger;
 		this.props.itemCallbacks.addItem(this.state);
 		this.props.history.push('/');
 	}

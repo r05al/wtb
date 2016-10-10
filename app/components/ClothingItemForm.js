@@ -35,10 +35,10 @@ class ClothingItemForm extends Component {
 							<option value="pant">Pant</option>
 							<option value="shoe">Shoe</option>
 						</select><br />
-						<label htmlFor="image">Image</label>
-						<input id="image"
-									 value={this.props.draftItem.image}
-									 type="file" />
+						<input type="text"
+									 value={this.props.draftItem.href}
+									 onChange={this.handleChange.bind(this,'href')}
+									 placeholder="image url" />
 						<div className="actions">
 							<button type="submit">{this.props.buttonLabel}</button>
 						</div>
