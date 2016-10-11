@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import items from '../../public/items.json';
-import look from '../../public/look.json';
+import defaultLook from '../../public/look.json';
 import WTBBoard from './WTBBoard';
 import update from 'react-addons-update';
 
@@ -9,23 +9,28 @@ class WTBBoardContainer extends Component {
     super(...arguments);
     this.state = {
       clothingItems: [],
-      look: { "pieces": [], "date": null },
+      look: { "pieces": {
+                          "jacket" : { type: "jacket"},
+                          "shirt" : { type: "shirt"},
+                          "pant" : { type: "pant"},
+                          "shoe" : { type: "shoe"}
+                        },
+              "date": null },
       savedLooks: []
     };
   }
 
   componentDidMount() {
     this.setState({ clothingItems: items });
-    this.setState({ look: look });
+    this.setState({ look: defaultLook });
   }
 
   select(item) {
-    let pieceIndex = this.state.look.pieces.findIndex((piece) => piece.type == item.type);
 
     let nextState = update(
       this.state.look, { 
-        pieces: { 
-          [pieceIndex]: { $set: item }
+        pieces: {
+          [item.type]: { $set: item }
         }
       }
     );
@@ -34,16 +39,13 @@ class WTBBoardContainer extends Component {
   }
 
   deselect(item) {
-    let pieceIndex = this.state.look.pieces.findIndex((piece) => piece.type == item.type);
 
     let nextState = update(
       this.state.look, {
         pieces: {
-          [pieceIndex]: { 
+          [item.type]: { 
             $set: {
-                    "id": Date.now(),
-                    "type": item.type,
-                    "title": `Select ${item.type}`
+                    "type": item.type
                   }
           }
         }
@@ -57,7 +59,7 @@ class WTBBoardContainer extends Component {
   handleChange(date) {
 
     let datedLook = update(
-      look, {
+      defaultLook, {
         date: { $set: date }
       }
     );
@@ -87,10 +89,10 @@ class WTBBoardContainer extends Component {
                           [itemIndex]: { $set: item }
                         });
     
-    let lookIndex = this.state.look.findIndex((piece) => piece.id == item.id);
+    let lookIndex = this.state.look.pieces.findIndex((piece) => piece.id == item.id);
 
     if (lookIndex !== -1) {
-      this.deselect(this.state.look[lookIndex]);
+      this.deselect(this.state.look.pieces[lookIndex]);
     }
 
     this.setState({ clothingItems: nextState });
@@ -110,12 +112,23 @@ class WTBBoardContainer extends Component {
   }
 
   updateLook(look) {
+    if (look.id === "") {
+      return false;
+    }
 
+    let savedLookIndex = this.state.savedLooks.findIndex((savedLook) => savedLook.id == look.id);
+
+    let nextState = update(this.state.savedLooks, {
+                            [savedLookIndex]: { $set: look }
+                            });
+
+    this.setState({savedLooks: nextState});
+    this.setState({look: look});
   }
 
   setLook(lookId) {
-    if (lookId === "null") {
-      this.setState({look: look});
+    if (lookId === "") {
+      this.setState({look: defaultLook});
       return false;
     }
     let lookIndex = this.state.savedLooks.findIndex((look) => look.id == lookId);
