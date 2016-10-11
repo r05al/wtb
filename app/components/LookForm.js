@@ -18,9 +18,17 @@ class LookForm extends Component {
 	}
 
 	render() {
-		let pieces = this.props.draftLook.pieces.map((piece) => {
-			return piece.title;
+
+		let pieces = this.props.draftLook.pieces;
+
+		let selectedPieces = Object.keys(pieces).filter((item) => {
+			return Boolean(pieces[item].id);
 		});
+
+		let images = selectedPieces.map((item) => {
+			return <div key={item} className="draft-img" style={{width: "20%"}}><img src={pieces[item].href}/></div>;
+		});
+
 		return (
 			<div>
 				<div className="item big">
@@ -33,14 +41,15 @@ class LookForm extends Component {
 									 autoFocus={true} /><br />
 						<textarea value={this.props.draftLook.description}
 											onChange={this.handleChange.bind(this,'description')}
-											placeholder="Description"
-											required={true} /><br />
+											placeholder="Description" /><br />
 						<label htmlFor="date">Date</label>
 						<DatePicker placeholderText="Click to select a date"
-						            onChange={this.handleDate.bind(this, 'date')} 
+						            onChange={this.handleDate.bind(this, 'date')}
+						            isClearable={true}
 						            selected={this.props.draftLook.date} />
-            <label htmlFor="pieces">Pieces</label>
-            	{ pieces }
+            <div style={{display: 'flex'}}>
+            	{ images }
+            </div>
 						<div className="actions">
 							<button type="submit">{this.props.buttonLabel}</button>
 						</div>
@@ -60,7 +69,7 @@ LookForm.propTypes = {
 		title: PropTypes.string,
 		description: PropTypes.string,
 		date: PropTypes.object,
-		pieces: PropTypes.arrayOf(PropTypes.object)
+		pieces: PropTypes.object
 	}).isRequired,
 	handleChange: PropTypes.func.isRequired,
 	handleSubmit: PropTypes.func.isRequired,
