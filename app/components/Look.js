@@ -3,29 +3,38 @@ import { Link } from 'react-router';
 
 class Look extends Component {
   render() {
-    let pieces = this.props.look.pieces.map((item) => {
-    	return <div className="look-grid" key={item.id}
-    							style={{
-    								backgroundImage: `url(${item.href})`,
-    								backgroundSize: '100%' 
-    							}}
+
+    let { jacket, shirt, pant, shoe } = this.props.look.pieces
+
+    let pieces = [jacket, shirt, pant, shoe].map((item) => {
+    	let info;
+    	if (item.id) {
+    		info = <img src={item.href}/>
+    	} else {
+    		info = <p><i>Select your {item.type}</i></p>
+    	}
+    	return <div className="look-grid" key={item.type}
 									onClick={ this.props.lookCallbacks.deselect.bind(null, item) }>
-							<span className="look-title">
-							 	{item.title}
-							</span>
+								{info}
 						 </div>
     });
 
-    let jacket = this.props.look.pieces.filter((item) => item.type == "jacket");
-    let shirt = this.props.look.pieces.filter((item) => item.type == "shirt");
-    let pant = this.props.look.pieces.filter((item) => item.type == "pant");
-    let shoe = this.props.look.pieces.filter((item) => item.type == "shoe");
+    let edit;
+    if (this.props.look.id) {
+    	edit = <div className="look-edit"><Link to={`looks/${this.props.look.id}/edit`}>✎</Link></div>
+    }
 
     return (
       <div className="look">
-      	<div className="item-edit"><Link to={'/save'}>✎</Link></div>
-        {this.props.look.title} - {this.props.look.description}
-        { pieces }
+      	<Link to='looks/new' className="look-new">+</Link>
+        <div className="look-description">
+        	{ edit }
+        	<h2>{this.props.look.title}</h2>
+        	<p>{this.props.look.description}</p>
+        </div>
+        <div className="look-flex">
+	        { pieces }
+	      </div>
       </div>
     );
   }
