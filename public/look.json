@@ -1,35 +1,12 @@
 {
-	"id" : 2001,
+	"id" : "",
 	"title": "Configure your Look",
 	"description": "Select items and prepare yourself for what's coming",
 	"date": null,
-	"pieces": [
-							{
-								"id" : 4003,
-								"title" : "Select jacket",
-								"type" : "jacket",
-								"href" : ""
-							},
-							{
-								"id" : 4001,
-								"title" : "Select shirt",
-								"type" : "shirt",
-								"href" : ""
-
-							},
-							{
-								"id" : 4002,
-								"title" : "Select pant",
-								"type" : "pant",
-								"href" : ""
-
-							},
-							{
-								"id" : 4004,
-								"title" : "Select shoe",
-								"type" : "shoe",
-								"href" : ""
-
-							}
-						]
+	"pieces": {
+							"jacket" : { "type": "jacket" },
+							"shirt" : { "type": "shirt" },
+							"pant" : { "type": "pant" },
+							"shoe" : { "type": "shoe" }
+						}
 }

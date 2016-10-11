@@ -11,6 +11,7 @@ html, body, #root, .app {
 
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+	font-weight: 200;
 }
 
 .list {
@@ -26,24 +27,23 @@ body {
 }
 
 .look {
-	height: 60%;
-	width: 50%;
+	position: relative;
+	height: 70%;
+	width: 60%;
 	margin: 0 auto;
 	text-align: center;
 }
 
-.look-grid {
-	height: 120px;
-	width: 120px;
+.look-flex {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: center;
 }
 
-.look-title {
-	opacity: 0;
-	transition: opacity .25s ease-in;
-}
-
-.look-title:hover {
-  opacity: 1;
+.look .look-grid {
+	width: 50%;
 }
 
 .selection-items {
@@ -128,6 +128,9 @@ img {
 }
 
 .actions {
+	position: absolute;
+	bottom: 12px;
+	right: 12px;
   margin-top: 10px;
   text-align: right;
 }
@@ -149,11 +152,33 @@ img {
   opacity: 1;
 }
 
-.item-edit a{
+.look-edit{
+  position: absolute;
+  top:10px;
+  right: 10px;
+  opacity: 0;
+  transition: opacity .25s ease-in;
+}
+
+.look-new{
+  position: absolute;
+  top:50px;
+  right: 10px;
+}
+
+.look-description:hover .look-edit{
+	opacity: 1;
+}
+
+.item-edit a, .look-edit a, a.look-new{
 	z-index: 2;
   text-decoration: none;
   color: #999;
   font-size: 17px;
+}
+
+.look-edit a, a.look-new{
+	font-size: 4em;
 }
 
 .overlay {
@@ -171,8 +196,8 @@ img {
   width: 56px;
   z-index: 2;
   right: 20px;
-  bottom: 20px;
-  background: #D43A2F;
+  bottom: 180px;
+  background: #34495e;
   color: white;
   border-radius: 100%;
   font-size: 34px;
@@ -180,4 +205,9 @@ img {
   text-decoration: none;
   line-height: 50px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.look .float-button {
+	top: 20px;
+	right: 20px;
 }
