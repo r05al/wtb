@@ -16,7 +16,7 @@ class WTBBoard extends Component {
 
   render() {
 
-    let clothingItemModal = this.props.children && React.cloneElement(this.props.children, {
+    let addOrUpdateModal = this.props.children && React.cloneElement(this.props.children, {
       clothingItems: this.props.clothingItems,
       look: this.props.look,
       itemCallbacks: this.props.itemCallbacks,
@@ -25,7 +25,10 @@ class WTBBoard extends Component {
 
     let datedLooks;
     if (this.props.look.date) {
-      datedLooks = this.props.savedLooks.filter((look) => look.date.format('L') === this.props.look.date.format('L'));
+      let day = this.props.look.date.startOf('day');
+      datedLooks = this.props.savedLooks.filter((look) => look.date).filter((look) =>
+        look.date.format('L') === this.props.look.date.format('L')
+      );
     } else {
       datedLooks = this.props.savedLooks;
     }
@@ -36,16 +39,19 @@ class WTBBoard extends Component {
 
     return (
       <div className="app">
-        <Link to='/new' className="float-button">+</Link>
+        <Link to='items/new' className="float-button">+</Link>
 
         <DatePicker selected={this.props.look.date}
+                    isClearable={true}
+                    placeholderText='Select a date to filter by'
                     onChange={this.props.lookCallbacks.handleChange } />
         <select id="savedLook"
                 value={this.props.look.id}
                 onChange={this.handleSetLook.bind(this)}>
-          <option value="null"></option>
+          <option value=""></option>
           {savedLooksSelection}
         </select>
+        <Link to='packing-list'>Packing List</Link>
         <Look id="look"
               look={this.props.look}
               lookCallbacks={this.props.lookCallbacks} />
@@ -67,7 +73,7 @@ class WTBBoard extends Component {
                 lookCallbacks={this.props.lookCallbacks}
                 clothingItems={this.props.clothingItems.filter((item) => item.type === "shoe")} />
         </div>
-        { clothingItemModal }
+        { addOrUpdateModal }
       </div>
     )
   }
