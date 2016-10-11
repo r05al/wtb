@@ -5,16 +5,20 @@ import WTBBoardContainer from './components/WTBBoardContainer';
 import WTBBoard from './components/WTBBoard';
 import NewClothingItem from './components/NewClothingItem';
 import EditClothingItem from './components/EditClothingItem';
-import SaveLook from './components/SaveLook';
+import NewLook from './components/NewLook';
+import EditLook from './components/EditLook';
+import PackingList from './components/PackingList';
 
 render((
   <Router history={browserHistory}>
     <Route component={WTBBoardContainer}>
       <Route path="/" component={WTBBoard}>
-        <Route path="new" component={NewClothingItem} />
-        <Route path="edit/:item_id" component={EditClothingItem} />
-        <Route path="save" component={SaveLook} />
+        <Route path="items/new" component={NewClothingItem} />
+        <Route path="items/:id/edit" component={EditClothingItem} />
+        <Route path="looks/new" component={NewLook} />
+        <Route path="looks/:id/edit" component={EditLook} />
       </Route>
+      <Route path="packing-list" component={PackingList} />
     </Route>
   </Router>
 ), document.getElementById('root'));
