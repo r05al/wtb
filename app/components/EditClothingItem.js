@@ -4,7 +4,7 @@ import ClothingItemForm from './ClothingItemForm';
 class EditClothingItem extends Component {
 
 	componentWillMount() {
-		let item = this.props.clothingItems.find((item) => item.id == this.props.params.item_id);
+		let item = this.props.clothingItems.find((item) => item.id == this.props.params.id);
 		this.setState(Object.assign({}, item));
 	}
 
