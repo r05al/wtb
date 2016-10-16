@@ -9,29 +9,34 @@ html, body, #root, .app {
 	padding: 0;
 }
 
+div {
+	box-sizing: border-box;
+}
+
 body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+	font-family: 'proxima-nova','Helvetica Neue',Arial,Helvetica,sans-serif;
 	font-weight: 200;
 }
 
-.list {
-	height: 40px;
-	width: 100%;
-	box-sizing: border-box;
-	border-top: lightgray solid;
-	color: #403e3d;
+a {
+	text-decoration: none;
+	color: black;
 }
 
-.list-title {
-
+@media (min-width: 500px) and (max-width: 600px) {
+  body {
+    background-color: fuchsia;
+  }
 }
 
-.look {
+.look, .packing-list {
+	padding: 10%;
 	position: relative;
-	height: 70%;
-	width: 60%;
+	height: 76%;
+	width: 80%;
 	margin: 0 auto;
 	text-align: center;
+	z-index: -1;
 }
 
 .look-flex {
@@ -46,26 +51,58 @@ body {
 	width: 50%;
 }
 
-.selection-items {
+.selection-lists {
 	width: 100%;
-	position: fixed;
+	position: absolute;
 	left: 0;
 	bottom: 0;
 }
 
-.list--is-open {
-	height: 120px;
+.list {
+	position: relative;
 	width: 100%;
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	background-color: white
-
+	background-image: url(./dark-edges.jpg);
+	background-size: cover;
+	border-top: black solid;
+	box-shadow: inset 0 0 6em black;
 }
 
-.list-title--is-open {
-	position: fixed;
-	bottom: 120px;
+.list-title {
+	box-sizing: border-box;
+	font-weight: 600;
+	color: white;
+	text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+	width: 100%;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.list-title:before {
+	content: "▷";
+}
+
+.list-title--is-open:before {
+	content: "▽";
+}
+
+
+.toggle-enter {
+  max-height: 0;
+  overflow: hidden;
+}
+.toggle-enter.toggle-enter-active {
+  max-height: 200px;
+  overflow: hidden;
+  transition: max-height .5s ease-in;
+}
+.toggle-leave {
+  max-height: 200px;
+  overflow: hidden;
+}
+.toggle-leave.toggle-leave-active {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s ease-out;
 }
 
 .clothing {
@@ -83,12 +120,8 @@ img {
   position: relative;
   z-index: 1;
   background: #fff;
-  width: 100%;
-  padding: 10px 10px 10px 15px;
-  margin: 0 0 10px 0;
   overflow: auto;
   border: 1px solid #e5e5df;
-  border-radius: 3px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
 }
 
@@ -207,7 +240,139 @@ img {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
+.add-button {
+  position: absolute;
+  height: 0px;
+  width: 56px;
+  z-index: 2;
+  background: #34495e;
+  color: white;
+  border-radius: 6px;
+  font-size: 18px;
+  line-height: 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+	right: 0;
+	bottom: 0;
+	transition: opacity .25s ease-in;
+}
+
+.add-look {
+	bottom: 110px;
+  height: 30px;
+	transition: opacity .25s ease-out;
+}
+
+.add-item {
+	bottom: 70px;
+  height: 30px;
+	transition: opacity .25s ease-out;
+}
+
 .look .float-button {
 	top: 20px;
 	right: 20px;
+}
+
+.control {
+	color: white;
+	position: absolute;
+	font-size: 2em;	
+	left: 5%;
+	top: 30%;
+	z-index: 1;
+}
+
+.drawer {
+	position: absolute;
+	bottom: -850%;
+	left: 8%;
+	background-color: #424242;
+	height: 850%;
+	width: 84%;
+	transition: ease-in-out .75s;
+	z-index: -1;
+}
+
+.drawer-active {
+	bottom: 0;
+	transition: ease-in-out .75s;
+}
+
+#nav {
+	color: #BDBDBD;
+	position: absolute;
+	left: 5%;
+	top: 36%;
+  width: 4%;
+  height: 50%;
+  transform: rotate(0deg);
+  transition: .5s ease-in-out;
+  cursor: pointer;
+}
+
+#nav span {
+  display: block;
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: .25s ease-in-out;
+}
+
+#nav span:nth-child(1) {
+  top: 0;
+}
+
+#nav span:nth-child(2),#nav span:nth-child(3) {
+  top: 25%;
+}
+
+#nav span:nth-child(4) {
+  top: 50%;
+}
+
+#nav.open span:nth-child(1) {
+  top: 25%;
+  width: 0%;
+  left: 50%;
+}
+
+#nav.open span:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+#nav.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+#nav.open span:nth-child(4) {
+  top: 25%;
+  width: 0%;
+  left: 50%;
+}
+
+#search {
+	position: fixed;
+	color: white;
+	font-size: 4em;
+	transform: rotate(180deg);
+	right: 2%;
+}
+
+.search-options {
+	display: none;
+	width: 100%;
+	top: 10%;
+	position: absolute;
+	background-color: #424242;
+	align-items: center;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.search-options--is-open {
+	display: flex;
 }
