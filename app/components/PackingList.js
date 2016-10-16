@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import DatePicker from 'react-datepicker';
+import NavMenu from './NavMenu';
 import { Link } from 'react-router';
 import List from './List';
 import moment from 'moment';
@@ -12,7 +13,12 @@ class PackingList extends Component {
     this.state = {
       startDate: null,
       endDate: null,
+      showFilter: false
     }
+  }
+
+  toggleFilter() {
+    this.setState({ showFilter: !this.state.showFilter });
   }
 
   handleChangeStart(date) {
@@ -27,17 +33,12 @@ class PackingList extends Component {
     this.setState({showGenerate: this.state.startDate && this.state.endDate});
   }
 
-  getUnique(array) {
-    let u = {}, a = [];
-    array.forEach((value) => {
-      if (u.hasOwnProperty(value)) return;
-      a.push(value);
-      u[value] = 1;
-    });
-    return a;
-  }
-
   render() {
+
+    let getStarted;
+    if (!this.setState.startDate && !this.state.endDate){
+      getStarted = <p><i>Select dates to generate your packing list</i></p>
+    }
 
     let generatedList, generatedItemList, items = [];
     if (this.state.startDate && this.state.endDate) {
@@ -63,30 +64,41 @@ class PackingList extends Component {
             </div>
           );
         });
+      } else {
+        generatedItemList = "No looks found. Please create for the days selected.";
       }
     }
 
     return (
-      <div className="packing-list">
-        <Link to='/'>Home</Link>
-
-        <DatePicker
-            selected={this.state.startDate}
-            selectsStart    startDate={this.state.startDate}
-            endDate={this.state.endDate}
-            isClearable={true}
-            onChange={this.handleChangeStart.bind(this)} />
-        <DatePicker
-            selected={this.state.endDate}
-            selectsEnd    startDate={this.state.startDate}
-            endDate={this.state.endDate}
-            isClearable={true}
-            onChange={this.handleChangeEnd.bind(this)} />
-        <h2>Packing List</h2>
-        <form>
-          { generatedItemList }
-        </form>
-      </div>
+      <section className="app">
+        <NavMenu />
+        <div id="search" onClick={this.toggleFilter.bind(this)}>&#9740;</div>
+        <div className={this.state.showFilter ? "search-options search-options--is-open":"search-options"}>
+          <DatePicker
+              selected={this.state.startDate}
+              placeholderText='Select a start date'
+              selectsStart    startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              isClearable={true}
+              onChange={this.handleChangeStart.bind(this)}
+              style={{ flex: "1"}} />
+          <DatePicker
+              selected={this.state.endDate}
+              placeholderText='Select a end date'
+              selectsEnd    startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              isClearable={true}
+              onChange={this.handleChangeEnd.bind(this)}
+              style={{ flex: "1"}} />
+        </div>
+        <div className="packing-list">
+          Packing List
+          { getStarted }
+          <form>
+            { generatedItemList }
+          </form>
+        </div>
+      </section>
     )
   }
 }
