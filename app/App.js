@@ -18,7 +18,7 @@ render((
         <Route path="looks/new" component={NewLook} />
         <Route path="looks/:id/edit" component={EditLook} />
       </Route>
-      <Route path="packing-list" component={PackingList} />
+      <Route path="pack" component={PackingList} />
     </Route>
   </Router>
 ), document.getElementById('root'));
