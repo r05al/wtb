@@ -26,10 +26,9 @@ class Look extends Component {
 
     return (
       <div className="look">
-      	<Link to='looks/new' className="look-new">+</Link>
         <div className="look-description">
         	{ edit }
-        	<h2>{this.props.look.title}</h2>
+        	<p>{this.props.look.title}</p>
         	<p>{this.props.look.description}</p>
         </div>
         <div className="look-flex">
