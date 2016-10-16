@@ -22,7 +22,11 @@ module.exports = {
       {
         test: /\.css$/,
         loader: 'style!css'
-      }
+      },
+      { 
+        test: /\.jpg$/,
+        loader: 'file' 
+      },
     ]
   },
 
