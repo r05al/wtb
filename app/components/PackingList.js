@@ -22,11 +22,21 @@ class PackingList extends Component {
   }
 
   handleChangeStart(date) {
+    if (date && date.isAfter(this.state.endDate)) {
+      this.setState({startDate: this.state.endDate});
+      this.setState({endDate: date});
+    } else {
     this.setState({startDate: date});
+    }
   }
 
   handleChangeEnd(date) {
+    if (date && date.isBefore(this.state.startDate)) {
+      this.setState({endDate: this.state.startDate});
+      this.setState({startDate: date});
+    } else {
     this.setState({endDate: date});
+    }
   }
 
   toggleGenerate() {
@@ -89,6 +99,9 @@ class PackingList extends Component {
               endDate={this.state.endDate}
               isClearable={true}
               onChange={this.handleChangeEnd.bind(this)}
+              popoverAttachment='bottom center'
+              popoverTargetAttachment='top center'
+              popoverTargetOffset='10px 60px'
               style={{ flex: "1"}} />
         </div>
         <div className="packing-list">
