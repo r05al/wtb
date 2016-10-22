@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import DatePicker from 'react-datepicker';
 import NavMenu from './NavMenu';
-import { Link } from 'react-router';
-import List from './List';
-import moment from 'moment';
 
-import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 class PackingList extends Component {
   constructor() {
@@ -39,15 +36,19 @@ class PackingList extends Component {
     }
   }
 
-  toggleGenerate() {
-    this.setState({showGenerate: this.state.startDate && this.state.endDate});
+  checkItemStatus(item) {
+    let itemIndex = this.props.clothingItems.findIndex((piece) => piece.id == item.id);
+    return this.props.clothingItems[itemIndex].available;
   }
 
   render() {
 
     let getStarted;
     if (!this.setState.startDate && !this.state.endDate){
-      getStarted = <p><i>Select dates to generate your packing list</i></p>
+      getStarted = <p onClick={this.toggleFilter.bind(this)}
+                      style={{ cursor: "pointer"}}>
+                     <i>Select dates to generate your packing list</i>
+                   </p>
     }
 
     let generatedList, generatedItemList, items = [];
@@ -59,23 +60,27 @@ class PackingList extends Component {
       }).reduce((allLooks, look) => {
           let items = Object.keys(look.pieces).filter((item) => Boolean(look.pieces[item].id));
           let itemObjects = items.map((item) => look.pieces[item]);
-          itemObjects.forEach((item) => allLooks[item.title] = item.href);
+          itemObjects.forEach((item) => {
+            allLooks[item.id] = {"title": item.title, "href": item.href, "available": this.checkItemStatus(item)};
+          });
           return allLooks;
       }, {});
 
       if (Object.keys(generatedList).length) {
         generatedItemList = Object.keys(generatedList).map((item) => {
           return (
-            <div key={item} style={{display: "inline"}}>
-              <div style={{position: "relative", display: "inline-block", width: "25%"}}>
-                <img className="pack-image" src={generatedList[item]} />
+            <div key={item} style={{display: "inline", width: "25%" }}>
+              <div style={{position: "relative", display: "inline-block", width: "80%"}}>
+                <img className="pack-image" src={generatedList[item]["href"]}
+                     style={ generatedList[item]["available"] ? {} : { filter: "opacity(50%)" }}/>
+                {generatedList[item]["title"]}
                 <input type="checkbox" style={{position: "absolute", left: "5px", top: "5px"}} />
               </div>
             </div>
           );
         });
       } else {
-        generatedItemList = "No looks found. Please create for the days selected.";
+        generatedItemList = "No looks found. Create new ones for the days selected.";
       }
     }
 
@@ -105,9 +110,9 @@ class PackingList extends Component {
               style={{ flex: "1"}} />
         </div>
         <div className="packing-list">
-          Packing List
+          <h2><strong>Packing List</strong></h2>
           { getStarted }
-          <form>
+          <form style={{display: "flex", flexWrap: "wrap"}}>
             { generatedItemList }
           </form>
         </div>
@@ -117,7 +122,8 @@ class PackingList extends Component {
 }
 
 PackingList.propTypes = {
-  savedLooks: PropTypes.arrayOf(PropTypes.object)
+  savedLooks: PropTypes.arrayOf(PropTypes.object),
+  clothingItems: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default PackingList;
