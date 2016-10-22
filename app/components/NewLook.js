@@ -9,7 +9,7 @@ class SaveLook extends Component {
 			id: Date.now(),
 			title: "",
 			description: "",
-			date: moment(),
+			date: null,
 			pieces: this.props.look.pieces
 		});
 	}
