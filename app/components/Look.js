@@ -8,13 +8,14 @@ class Look extends Component {
 
     let pieces = [jacket, shirt, pant, shoe].map((item) => {
     	let info;
-    	if (item.id) {
-    		info = <img src={item.href}/>
-    	} else {
-    		info = <p><i>Select your {item.type}</i></p>
-    	}
+      if (item.href && item.href.includes('placehold.it')) {
+        info = <span style={{textAlign: "center", width: "100%"}}>
+                {item.title}
+               </span>;
+      }
     	return <div className="look-grid" key={item.type}
 									onClick={ this.props.lookCallbacks.deselect.bind(null, item) }>
+                <img src={item.href} />
 								{info}
 						 </div>
     });
@@ -28,7 +29,7 @@ class Look extends Component {
       <div className="look">
         <div className="look-description">
         	{ edit }
-        	<p>{this.props.look.title}</p>
+        	<h2><strong>{this.props.look.title}</strong></h2>
         	<p>{this.props.look.description}</p>
         </div>
         <div className="look-flex">
