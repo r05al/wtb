@@ -42,7 +42,6 @@ class LookForm extends Component {
 						<textarea value={this.props.draftLook.description}
 											onChange={this.handleChange.bind(this,'description')}
 											placeholder="Description" /><br />
-						<label htmlFor="date">Date</label>
 						<DatePicker placeholderText="Click to select a date"
 						            onChange={this.handleDate.bind(this, 'date')}
 						            isClearable={true}
