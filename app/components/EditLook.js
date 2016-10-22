@@ -25,7 +25,7 @@ class EditLook extends Component {
 	render() {
 		return (
 			<LookForm draftLook={this.state}
-												buttonLabel="Edit Look"
+												buttonLabel="Update Look"
 												handleChange={this.handleChange.bind(this)}
 												handleSubmit={this.handleSubmit.bind(this)}
 												handleClose={this.handleClose.bind(this)} />
