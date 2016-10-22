@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import items from '../../public/items.json';
-import defaultLook from '../../public/look.json';
 import WTBBoard from './WTBBoard';
 import update from 'react-addons-update';
+import 'whatwg-fetch';
+
+const API_URL = 'https://398eprc7a0.execute-api.us-west-2.amazonaws.com/test/wearto-data';
+const API_HEADERS = {
+  'Content-Type': 'application/json',
+  Authorization: 'stuff'
+};
 
 class WTBBoardContainer extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       clothingItems: [],
+      defaultLook: {},
       look: { "pieces": {
                           "jacket" : { type: "jacket"},
                           "shirt" : { type: "shirt"},
@@ -21,8 +27,16 @@ class WTBBoardContainer extends Component {
   }
 
   componentDidMount() {
-    this.setState({ clothingItems: items });
-    this.setState({ look: defaultLook });
+    fetch(API_URL + '/initialData.json', {headers: API_HEADERS})
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({defaultLook: responseData["defaultLook"]});
+      this.setState({look: responseData["defaultLook"]});
+      this.setState({clothingItems: responseData["items"]});
+    })
+    .catch((error) => {
+      console.log('Error in fetching and parsing data', error);
+    });
   }
 
   select(item) {
@@ -43,7 +57,7 @@ class WTBBoardContainer extends Component {
     let nextState = update(
       this.state.look, {
         pieces: {
-          [item.type]: { 
+          [item.type]: {
             $set: {
                     "type": item.type
                   }
@@ -59,7 +73,7 @@ class WTBBoardContainer extends Component {
   handleChange(date) {
 
     let datedLook = update(
-      defaultLook, {
+      this.state.defaultLook, {
         date: { $set: date }
       }
     );
@@ -70,8 +84,8 @@ class WTBBoardContainer extends Component {
   addItem(item) {
     let prevState = this.state;
 
-    if (item.id === null) {
-      let item = Object.assign({}, item, { id: Date.now() });
+    if (item.href === undefined) {
+      item = Object.assign({}, item, { href: "http://placehold.it/455x475" });
     }
 
     let nextState = update(this.state.clothingItems, { $push: [item] });
@@ -89,21 +103,35 @@ class WTBBoardContainer extends Component {
                           [itemIndex]: { $set: item }
                         });
     
-    let lookIndex = this.state.look.pieces.findIndex((piece) => piece.id == item.id);
-
-    if (lookIndex !== -1) {
-      this.deselect(this.state.look.pieces[lookIndex]);
+    for(let piece of Object.keys(this.state.look.pieces)) {
+      if (this.state.look.pieces[piece] &&
+        item.id === this.state.look.pieces[piece].id) {
+        this.deselect(this.state.look.pieces[piece]);
+      }
     }
+
+    this.setState({ clothingItems: nextState });
+  }
+
+  toggleItem(item) {
+    let prevState = this.state;
+
+    let itemIndex = this.state.clothingItems.findIndex((piece) => piece.id == item.id);
+
+    let nextState = update(
+                        this.state.clothingItems, {
+                          [itemIndex]: {
+                            available: {
+                              $set: !item.available
+                            }
+                          }
+                        });
 
     this.setState({ clothingItems: nextState });
   }
 
   addLook(look) {
     let prevState = this.state;
-
-    if (look.id === null) {
-      let look = Object.assign({}, look, { id: Date.now() });
-    }
 
     let nextState = update(this.state.savedLooks, { $push: [look] });
 
@@ -128,7 +156,7 @@ class WTBBoardContainer extends Component {
 
   setLook(lookId) {
     if (lookId === "") {
-      this.setState({look: defaultLook});
+      this.setState({look: this.state.defaultLook});
       return false;
     }
     let lookIndex = this.state.savedLooks.findIndex((look) => look.id == lookId);
@@ -141,14 +169,14 @@ class WTBBoardContainer extends Component {
       look: this.state.look,
       clothingItems: this.state.clothingItems,
       savedLooks: this.state.savedLooks,
-      selectedDate: this.state.selectedDate,
       lookCallbacks: {
         select: this.select.bind(this),
         deselect: this.deselect.bind(this),
         handleChange: this.handleChange.bind(this),
         addLook: this.addLook.bind(this),
         updateLook: this.updateLook.bind(this),
-        setLook: this.setLook.bind(this)
+        setLook: this.setLook.bind(this),
+        toggleItem: this.toggleItem.bind(this)
       },
       itemCallbacks: {
         addItem: this.addItem.bind(this),
