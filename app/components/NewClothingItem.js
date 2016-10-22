@@ -8,7 +8,8 @@ class NewClothingItem extends Component {
 			id: Date.now(),
 			title: "",
 			tags: "",
-			type: "jacket",			
+			type: "jacket",
+			available: true	
 		});
 	}
 
