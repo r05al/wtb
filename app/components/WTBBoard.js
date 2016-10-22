@@ -59,6 +59,14 @@ class WTBBoard extends Component {
 
         <div id="search" onClick={this.toggleFilter.bind(this)}>&#9740;</div>
         <div className={this.state.showFilter ? "search-options search-options--is-open":"search-options"}>
+          <DatePicker selected={this.props.look.date}
+                      isClearable={true}
+                      placeholderText='Select a date to filter by'
+                      popoverAttachment='bottom center'
+                      popoverTargetAttachment='top center'
+                      popoverTargetOffset='10px 50px'
+                      onChange={this.props.lookCallbacks.handleChange } 
+                      style={{ flex: "2"}}/>
           <select id="savedLook"
                   value={this.props.look.id}
                   style={{ flex: "1"}}
@@ -66,14 +74,6 @@ class WTBBoard extends Component {
             <option value="">saved looks</option>
             {savedLooksSelection}
           </select>
-          <DatePicker selected={this.props.look.date}
-                      isClearable={true}
-                      placeholderText='Select a date to filter by'
-                      popoverAttachment='bottom right'
-                      popoverTargetAttachment='top center'
-                      popoverTargetOffset='10px 30px'
-                      onChange={this.props.lookCallbacks.handleChange } 
-                      style={{ flex: "1"}}/>
         </div>
 
         <div className="float-button"
@@ -93,7 +93,7 @@ class WTBBoard extends Component {
               lookCallbacks={this.props.lookCallbacks} />
         <div className="selection-lists">
           <List id="jacket"
-                lookCallbacks={this.props.lookCallbacks}
+                lookCallbacks={this.props.lookCallbacks} 
                 clothingItems={this.props.clothingItems.filter((item) => item.type === "jacket")} />
           <List id="shirt"
                 lookCallbacks={this.props.lookCallbacks}
