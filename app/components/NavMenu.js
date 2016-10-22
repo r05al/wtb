@@ -14,13 +14,12 @@ class NavMenu extends Component {
 		this.setState({ showMenu: !this.state.showMenu });
 	}
 
-
-
 	render() {
 
 		let backgroundStyle = {
+			zIndex: 1,
 			width: "100%",
-			height: "inherit",
+			height: "65px",
 			position: "fixed"
 		}
 
@@ -32,11 +31,13 @@ class NavMenu extends Component {
 		}
 
 		let drawerTopStyle = {
-				height: "10%", width: "100%",
+				height: "100%", width: "100%",
 				backgroundImage: "url(" + woodgrain+ ")",
 				backgroundSize: "cover",
 				boxShadow: "inset 0 0 9em black",
-				position: "relative"
+				position: "relative",
+				borderBottom: "black solid 4px"
+
 		}
 
 		let drawerFaceStyle = { 
@@ -48,7 +49,8 @@ class NavMenu extends Component {
 			position: "absolute",
 			borderRadius: "6%",
 			left: "-5%",
-			bottom: "0%"
+			bottom: "0%",
+			border: "black solid"
 		}
 
 		let linkStyle = {
