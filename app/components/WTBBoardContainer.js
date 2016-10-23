@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import WTBBoard from './WTBBoard';
 import update from 'react-addons-update';
 import 'whatwg-fetch';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 const API_URL = 'https://398eprc7a0.execute-api.us-west-2.amazonaws.com/test/wearto-data';
 const API_HEADERS = {

@@ -6,8 +6,6 @@ import Look from './Look';
 import List from './List';
 import moment from 'moment';
 
-import 'react-datepicker/dist/react-datepicker.css';
-
 class WTBBoard extends Component {
   constructor() {
     super(...arguments);

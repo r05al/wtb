@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import DatePicker from 'react-datepicker';
 import NavMenu from './NavMenu';
 
-// import 'react-datepicker/dist/react-datepicker.css';
-
 class PackingList extends Component {
   constructor() {
     super(...arguments);
@@ -73,7 +71,7 @@ class PackingList extends Component {
               <div style={{position: "relative", display: "inline-block", width: "80%"}}>
                 <img className="pack-image" src={generatedList[item]["href"]}
                      style={ generatedList[item]["available"] ? {} : { filter: "opacity(50%)" }}/>
-                {generatedList[item]["title"]}
+                <div style={{position: "absolute", top: "70%"}}>{generatedList[item]["title"]}</div>
                 <input type="checkbox" style={{position: "absolute", left: "5px", top: "5px"}} />
               </div>
             </div>

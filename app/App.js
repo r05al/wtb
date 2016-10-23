@@ -8,6 +8,7 @@ import EditClothingItem from './components/EditClothingItem';
 import NewLook from './components/NewLook';
 import EditLook from './components/EditLook';
 import PackingList from './components/PackingList';
+import '../public/styles.css';
 
 render((
   <Router history={browserHistory}>
